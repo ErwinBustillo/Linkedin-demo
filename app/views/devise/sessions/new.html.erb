@@ -1,0 +1,33 @@
+
+<div class="container">
+<div class="row">
+<div class="col-md-4 col-md-offset-4">
+<div class="form-body">
+    <ul class="nav nav-tabs final-login">
+        <li class="active"><a href="#sectionA">Sign In</a></li>
+        <li>
+					<%= link_to "Join us!", new_persona_registration_path %>
+				</li>
+    </ul>
+    <div >
+        <div class="">
+        <div class="innter-form">
+            <%=   form_for(resource, as: resource_name, url: session_path(resource_name),:html => {:class => "sa-innate-form"}) do |f| %>
+            <label>Email Address</label>
+            <%= f.email_field :email, autofocus: true %>
+            <label>Password</label>
+            <%= f.password_field :password, autocomplete: "off" %>
+            <%= f.submit "Log in" %>
+            <a href="">Forgot Password?</a>
+            <% end -%>
+            </div>
+            <div class="social-login">
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>

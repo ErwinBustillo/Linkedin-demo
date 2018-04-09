@@ -1,0 +1,32 @@
+production:
+  clients:
+    default:
+      database: linkedinuninorte
+      hosts:
+        - ds053186.mlab.com:53186
+      options:
+        user: 'admin'
+        password: '123456'
+  
+
+development:
+    clients:
+      default:
+        database: linkedinuninorte
+        hosts:
+          - ds053186.mlab.com:53186
+        options:
+          user: 'admin'
+          password: '123456'
+    options:
+
+test:
+  clients:
+    default:
+      database: linkedinuninorte
+      hosts:
+        - localhost:27017
+      options:
+        read:
+          mode: :primary
+        max_pool_size: 1

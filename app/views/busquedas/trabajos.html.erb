@@ -1,0 +1,82 @@
+<div class="column col-sm-9 col-xs-11 full" id="main">
+
+    <!-- top nav -->
+    <div class="navbar navbar-blue navbar-static-top">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand logo">b</a>
+        </div>
+        <nav class="collapse navbar-collapse" role="navigation">
+            <form class="navbar-form navbar-left">
+                <div class="input-group input-group-sm" style="max-width:360px;">
+                    <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <ul class="nav navbar-nav">
+                <li>
+                  <%= link_to personas_busquedas_path, :title => "Busquedas Personas" do %>
+                    <i class="glyphicon glyphicon-search"></i>
+                    Buscar Personas
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to trabajos_busquedas_path, :title => "Busquedas Trabajos" do %>
+                    <i class="glyphicon glyphicon-search"></i>
+                    Buscar Trabajos
+                  <% end %>
+                </li>
+                <li>
+                    <a href="#postModal" role="button" data-toggle="modal">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        Postear oferta</a>
+                </li>
+                <li>
+                    <a href="#postTrabajoModal" role="button" data-toggle="modal">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        Postear trabajo</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-user"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><%= link_to "Cerrar", destroy_persona_session_path, method: :delete %></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <!-- /top nav -->
+
+    <div class="padding">
+      <div class="modal-header">
+        Busqueda de trabajos
+      </div>
+      <div class="modal-body">
+        <%= form_tag(resultado_trabajos_busquedas_path, method: "post", class:"form center-block", id:'buscar_trabajos') do %>
+          <div class="form-group">
+            <%= select_tag "empresa_id", options_from_collection_for_select(Empresa.all, "id", "nombre"), placeholder:"Empresa", include_blank: 'Empresa' %>
+            <%= text_field_tag :descripcion, nil, class:"form-control", placeholder:"Descripcion" %>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <div>
+          <button id="trigger_form_busqueda_trabajos" class="btn btn-primary btn-sm" aria-hidden="true">Buscar</button>
+        </div>
+      </div>
+    </div>
+    <!-- /padding -->
+</div>

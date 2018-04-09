@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>LinkedInUninorte</title>
+		<meta name="generator" content="Bootply"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<%= csrf_meta_tags %>
+		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+	</head>
+
+	<body>
+		<% if persona_signed_in? %>
+		<div class="wrapper">
+			<div class="box">
+				<div class="row row-offcanvas">
+
+					<%= yield %>
+
+				</div>
+			</div>
+		</div>
+		<% else %>
+			<%= yield %>
+		<% end %>
+		<!--post modal-->
+		<div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						Nueva oferta laboral
+					</div>
+					<div class="modal-body">
+						<%= form_tag(ofertas_path, method: "post", class:"form center-block", id:"create_oferta") do %>
+							<div class="form-group">
+								<%= text_field_tag :nombre_contacto, nil, class:"form-control", placeholder:"Nombre contacto" %>
+								<%= text_field_tag :apellido_contacto, nil, class:"form-control", placeholder:"Apellido contacto" %>
+								<%= text_field_tag :titulo, nil, class:"form-control", placeholder:"Titulo" %>
+								<%= text_field_tag :salario, nil, class:"form-control", placeholder:"Salario" %>
+								<%= select_tag "carrera_id", options_from_collection_for_select(Carrera.all, "id", "nombre"), placeholder:"Empresa" %>
+								<%= select_tag "empresa_id", options_from_collection_for_select(Empresa.all, "id", "nombre"), placeholder:"Empresa" %>
+								<textarea class="form-control input-lg" autofocus="" placeholder="Describe en pocas palabras la oferta laboral"></textarea>
+							</div>
+						<% end %>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button id="trigger_form" class="btn btn-primary btn-sm" aria-hidden="true">Post</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--post trabajo modal-->
+		<div id="postTrabajoModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						Nuevo registro de trabajo
+					</div>
+					<div class="modal-body">
+						<%= form_tag(trabajos_path, method: "post", class:"form center-block", id:"create_trabajo") do %>
+							<div class="form-group">
+								<%= text_field_tag :cargo, nil, class:"form-control", placeholder:"Cargo" %>
+								<input id="fecha_inicio" name="fecha_inicio" type="date" class="form-control" />
+								<input id="fecha_fin" name="fecha_fin" type="date" class="form-control" />
+								<%= select_tag "empresa_id", options_from_collection_for_select(Empresa.all, "id", "nombre"), placeholder:"Empresa" %>
+							</div>
+						<% end %>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button id="trigger_form_trabajo" class="btn btn-primary btn-sm" aria-hidden="true">Post</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+</html>
+<script>
+	$("#trigger_form").click( function() {
+	    $('#create_oferta').submit();
+	});
+	$("#trigger_form_trabajo").click( function() {
+	    $('#create_trabajo').submit();
+	});
+	$("#trigger_form_busqueda_personas").click( function() {
+	    $('#buscar_personas').submit();
+	});
+	$("#trigger_form_busqueda_trabajos").click( function() {
+	    $('#buscar_trabajos').submit();
+	});
+</script>

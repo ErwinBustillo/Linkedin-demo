@@ -1,0 +1,156 @@
+<div class="column col-sm-9 col-xs-11 full " id="main">
+
+    <!-- top nav -->
+    <div class="navbar navbar-blue navbar-static-top">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand logo">b</a>
+        </div>
+        <nav class="collapse navbar-collapse" role="navigation">
+            <form class="navbar-form navbar-left">
+                <div class="input-group input-group-sm" style="max-width:360px;">
+                    <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <ul class="nav navbar-nav">
+              <li>
+                <%= link_to personas_busquedas_path, :title => "Busquedas Personas" do %>
+                  <i class="glyphicon glyphicon-search"></i>
+                  Buscar Personas
+                <% end %>
+              </li>
+              <li>
+                <%= link_to trabajos_busquedas_path, :title => "Busquedas Trabajos" do %>
+                  <i class="glyphicon glyphicon-search"></i>
+                  Buscar Trabajos
+                <% end %>
+              </li>
+              <li>
+                  <a href="#postModal" role="button" data-toggle="modal">
+                      <i class="glyphicon glyphicon-plus"></i>
+                      Postear oferta</a>
+              </li>
+              <li>
+                  <a href="#postTrabajoModal" role="button" data-toggle="modal">
+                      <i class="glyphicon glyphicon-plus"></i>
+                      Postear trabajo</a>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-user"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><%= link_to "Cerrar", destroy_persona_session_path, method: :delete %></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <!-- /top nav -->
+
+    <div class="padding">
+        <div class="full col-sm-9">
+
+            <!-- content -->
+            <div class="row">
+
+                <!-- main col left -->
+                <div class="col-sm-5">
+
+                    <div class="panel panel-default">
+                        <div class="panel-thumbnail"><img src="http://s.bootply.com/assets/example/bg_5.jpg" class="img-responsive"></div>
+                        <div class="panel-body">
+                            <p class="lead"><%= "#{@persona.nombre.capitalize if @persona.nombre} #{@persona.apellido.capitalize if @persona.apellido}" %></p>
+                            <p><%= @persona.cantidad_amigos %>
+                                Amigos,
+                                <%= @persona.ofertas.count %>
+                                Ofertas</p>
+
+                            <p>
+                                <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
+                            </p>
+                            <% if !current_persona.personas.include?(@persona) %>
+                              <%= form_tag(agregar_amigo_persona_path(@persona.id), method: "put") do %>
+                                  <%= submit_tag "Agregar Amigo", class: "btn btn-primary btn-lg" %>
+                              <% end %>
+                            <% end %>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>Lista de amigos</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <% @persona.personas.each do |amigo| %>
+                                <%= link_to "#{amigo.nombre} #{amigo.apellido}", persona_path(amigo.id), class:"list-group-item" %>
+                                <% end %>
+                                <% if @persona.padre %>
+                                <%= link_to "#{@persona.padre.nombre} #{@persona.padre.apellido}", persona_path(@persona.padre.id), class:"list-group-item" %>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% @persona.trabajos.order_by(:fecha_fin => 'desc').each do |trabajo| %>
+                      <div class="panel panel-default">
+                          <div class="panel-heading">
+                              <h4><%= trabajo.cargo.capitalize if trabajo.cargo %>(<%= trabajo.empresa.nombre if trabajo.empresa %>)</h4>
+                          </div>
+                          <div class="panel-body">
+                              <%= "#{trabajo.fecha_inicio} #{trabajo.fecha_fin}" %>
+                          </div>
+                      </div>
+                    <% end %>
+
+                </div>
+
+                <!-- main col right -->
+                <div class="col-sm-7">
+
+
+                </div>
+            </div>
+            <!--/row-->
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <a href="#">Twitter</a>
+                    <small class="text-muted">|</small>
+                    <a href="#">Facebook</a>
+                    <small class="text-muted">|</small>
+                    <a href="#">Google+</a>
+                </div>
+            </div>
+
+
+
+            <hr>
+
+            <h4 class="text-center">
+              <a href="" target="ext">Create by Erwin Bustillo, Cristian Suarez & Hernan Briñez</a>
+              <p>
+              </p>
+              <p href="#" class="smaller">©Copyright 2016</p>
+            </h4>
+
+            <hr>
+
+        </div>
+        <!-- /col-9 -->
+    </div>
+    <!-- /padding -->
+</div>
